@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Практикалық сабақ — Мәліметтер типтері</title>
+<style>
+  :root{
+    --bg:#f7fafc; --card:#ffffff; --accent:#1e90ff; --muted:#6b7280;
+    --radius:12px; --maxw:980px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:linear-gradient(180deg,#eef2ff, var(--bg));
+    color:#0f172a; line-height:1.45;
+    padding:24px;
+    display:flex; justify-content:center;
+  }
+  .wrap{width:100%;max-width:var(--maxw);}
+  header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+  .logo{
+    width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#7c3aed);
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;
+    box-shadow:0 6px 18px rgba(30,144,255,0.12);
+  }
+  h1{margin:0;font-size:20px}
+  p.lead{margin:6px 0 0;color:var(--muted)}
+  main{display:grid;grid-template-columns:1fr 320px;gap:20px;}
+  @media (max-width:900px){ main{grid-template-columns:1fr; } .sidebar{order:2} }
+  .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 6px 20px rgba(16,24,40,0.06)}
+  .section + .section{margin-top:14px}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  button.btn{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid #e6eefb;color:var(--accent)}
+  .muted{color:var(--muted);font-size:14px}
+  iframe{border-radius:8px;margin-top:8px;width:100%;height:315px;}
+  .quiz-q{margin:10px 0;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fbfdff,#ffffff)}
+  .options{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .option{padding:8px;border-radius:8px;border:1px solid #eef2ff;cursor:pointer}
+  .option.selected{background:#eef6ff;border-color:var(--accent)}
+  .match-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .match-card{padding:10px;border-radius:10px;background:#fbfbff;border:1px dashed #e6e9f2;cursor:pointer;text-align:center}
+  .match-card.locked{opacity:0.45;cursor:default}
+  textarea{width:100%;min-height:72px;padding:8px;border-radius:8px;border:1px solid #e6eefb}
+  .post{border-left:3px solid #e6eefb;padding:10px;margin-top:10px;border-radius:6px;background:#fff}
+  .meta{font-size:13px;color:var(--muted)}
+  .progress-row{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:8px}
+  .badge{background:#f0f9ff;color:#0369a1;padding:6px 8px;border-radius:999px;font-weight:600}
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:14px}
+  a.inline{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">МТ</div>
+  <div>
+    <h1>Практикалық сабақ — Мәліметтер типтері</h1>
+    <p class="lead">7-сынып АКТ пәні</p>
+  </div>
+</header>
+
+<main>
+<section class="card">
+  <h2>Кіріспе</h2>
+  <p>Сабақ барысында оқушылар мәліметтер типтері мен бірөлшемді массивтерді үйренеді, практикалық тапсырмаларды орындайды.</p>
+
+  <div class="section">
+    <h3>Мақсаты</h3>
+    <ul>
+      <li>Мәліметтер типтерін түсіндіру</li>
+      <li>Бірөлшемді массивтерді қолдану</li>
+      <li>Интерактивті тапсырмалар арқылы ұғымдарды бекіту</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>Материалдар</h3>
+    <p class="muted">Қысқаша конспект және бейне сабақ</p>
+    <div class="tools">
+      <button class="btn" onclick="openSection('materials')">Материалдар</button>
+      <button class="btn" onclick="openSection('quiz')">Викторина</button>
+      <button class="btn" onclick="openSection('game')">Ойын</button>
+      <button class="ghost" onclick="openSection('forum')">Форум</button>
+    </div>
+  </div>
+
+  <div class="section" id="materials" style="display:none;">
+    <h3>Бейне сабақ</h3>
+    <iframe src="https://www.youtube.com/embed/gnHmIRmg6Wg" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p>Бейне арқылы теорияны түсініп, практикалық тапсырмаларды орындаңыз.</p>
+  </div>
+
+  <div class="section" id="quiz" style="display:none;">
+    <h3>Викторина (5 сұрақ)</h3>
+    <div id="quizContainer"></div>
+    <button class="btn" onclick="submitQuiz()">Жіберу және бағалау</button>
+    <span id="quizMsg" class="muted" style="margin-left:10px"></span>
+  </div>
+
+  <div class="section" id="game" style="display:none;">
+    <h3>Интерактивті сәйкестендіру</h3>
+    <div id="matchArea"></div>
+    <button class="btn" onclick="resetMatch()">Қайта бастау</button>
+    <span id="matchMsg" class="muted" style="margin-left:10px"></span>
+  </div>
+
+  <div class="section" id="forum" style="display:none;">
+    <h3>Форум</h3>
+    <div id="posts" style="max-height:200px;overflow:auto;"></div>
+    <textarea id="postText" placeholder="Қысқаша пікір жазыңыз..."></textarea>
+    <input id="author" placeholder="Атыңыз" style="width:100%;margin-top:4px;padding:6px;border-radius:6px;border:1px solid #e6eefb" />
+    <button class="btn" onclick="addPost()">Жіберу</button>
+  </div>
+</section>
+
+<aside class="sidebar card">
+  <h3>Прогресс & Бағалау</h3>
+  <div class="progress-row">
+    <div>Викторина ұпайы:</div><div id="scoreBadge" class="badge">—</div>
+  </div>
+  <div class="progress-row">
+    <div>Ойын ұпайы:</div><div id="gameBadge" class="badge">—</div>
+  </div>
+  <button class="btn" onclick="showSummary()">Жалпы нәтиже көру</button>
+</aside>
+</main>
+
+<footer>
+© Мұғалімнің веб-сайты — практикалық сабақ.
+</footer>
+</div>
+
+<script>
+// ---------- Навигация ----------
+function openSection(id){
+  ['materials','quiz','game','forum'].forEach(s=>{
+    const el=document.getElementById(s);
+    if(!el) return;
+    el.style.display = (s===id) ? 'block' : 'none';
+  });
+  if(id==='quiz') renderQuiz();
+  if(id==='game') renderMatch();
+}
+
+// ---------- Викторина ----------
+const quizQuestions = [
+  {q:"Мәліметтер типтері не үшін қажет?", choices:["Бағаларды тексеру","Оқыту","Ақпаратты дұрыс сақтау"], a:2},
+  {q:"Бірөлшемді массив дегеніміз не?", choices:["Бір жолды массив","Тек сан","Тек мәтін"], a:0},
+  {q:"int типі қандай мәліметті сақтайды?", choices:["Мәтін","Сан","Көрініс"], a:1},
+  {q:"string типі қандай мәліметті сақтайды?", choices:["Мәтін","Сан","Көрініс"], a:0},
+  {q:"Викторинаны дұрыс орындау не үшін?", choices:["Білімді тексеру","Ойын","Тек уақыт өткізу"], a:0}
+];
+let userAnswers = [];
+function renderQuiz(){
+  const container = document.getElementById('quizContainer');
+  container.innerHTML='';
+  userAnswers = Array(quizQuestions.length).fill(null);
+  quizQuestions.forEach((item, idx)=>{
+    const qBox = document.createElement('div'); qBox.className='quiz-q';
+    qBox.innerHTML = `<strong>Сұрақ ${idx+1}.</strong> ${item.q}`;
+    const opts = document.createElement('div'); opts.className='options';
+    item.choices.forEach((c,i)=>{
+      const opt = document.createElement('div'); opt.className='option'; opt.tabIndex=0; opt.textContent=c;
+      opt.onclick=()=>{ userAnswers[idx]=i; Array.from(opts.children).forEach(ch=>ch.classList.remove('selected')); opt.classList.add('selected'); };
+      opt.onkeydown=(e)=>{ if(e.key==='Enter') opt.click(); };
+      opts.appendChild(opt);
+    });
+    qBox.appendChild(opts); container.appendChild(qBox);
+  });
+  document.getElementById('quizMsg').textContent='';
+}
+function submitQuiz(){
+  let score=0;
+  quizQuestions.forEach((q,i)=>{ if(userAnswers[i]===q.a) score++; });
+  const percent = Math.round(score/quizQuestions.length*100);
+  document.getElementById('quizMsg').textContent = `Нәтиже: ${score}/${quizQuestions.length} (${percent}%)`;
+  localStorage.setItem('quizScore', percent);
+  updateBadges();
+}
+
+// ---------- Интерактивті ойын ----------
+const matchPairs = [
+  {left:'int', right:'Бүтін сан'},
+  {left:'string', right:'Мәтіндік деректер'},
+  {left:'float', right:'Ондық сан'},
+  {left:'bool', right:'Логикалық мән'}
+];
+let matchState={first:null,solved:[]};
+function renderMatch(){
+  const area=document.getElementById('matchArea'); area.innerHTML=''; matchState={first:null,solved:[]};
+  const left=matchPairs.map(p=>p.left); const right=matchPairs.map(p=>p.right).sort(()=>Math.random()-0.5);
+  const container=document.createElement('div'); container.className='match-grid';
+  left.forEach((text,i)=>{ const card=document.createElement('div'); card.className='match-card'; card.textContent=text; card.dataset.side='L'; card.dataset.index=i; card.onclick=()=>selectMatch(card); container.appendChild(card); });
+  right.forEach((text,i)=>{ const card=document.createElement('div'); card.className='match-card'; card.textContent=text; card.dataset.side='R'; card.dataset.index=i; card.onclick=()=>selectMatch(card); container.appendChild(card); });
+  area.appendChild(container); document.getElementById('matchMsg').textContent='';
+}
+function selectMatch(card){
+  if(card.classList.contains('locked')) return;
+  if(!matchState.first){ matchState.first=card; card.style.outline='3px solid rgba(30,144,255,0.18)'; return; }
+  const first=matchState.first;
+  if(first.dataset.side===card.dataset.side){ first.style.outline=''; matchState.first=null; if(first!==card){ card.style.outline='3px solid rgba(30,144,255,0.18)'; matchState.first=card;} return;}
+  const leftText=first.dataset.side==='L'?first.textContent:card.textContent;
+  const rightText=first.dataset.side==='R'?first.textContent:card.textContent;
+  const pair=matchPairs.find(p=>p.left===leftText && p.right===rightText);
+  if(pair){ first.classList.add('locked'); card.classList.add('locked'); first.style.outline=''; card.style.outline=''; matchState.solved.push(pair); document.getElementById('matchMsg').textContent=`Жарайсың! ${matchState.solved.length}/${matchPairs.length}`; if(matchState.solved.length===matchPairs.length){setTimeout(()=>{document.getElementById('matchMsg').textContent='Барлығы табылды!'; localStorage.setItem('gameScore',100); updateBadges();},300);}} else{first.style.outline='3px solid rgba(255,0,0,0.12)'; card.style.outline='3px solid rgba(255,0,0,0.12)'; setTimeout(()=>{first.style.outline=''; card.style.outline='';},600);}
+  matchState.first=null;
+}
+function resetMatch(){ renderMatch(); localStorage.removeItem('gameScore'); updateBadges(); }
+
+// ---------- Форум ----------
+function addPost(){
+  const author=(document.getElementById('author').value||'Аты-жөні жоқ').trim();
+  const text=(document.getElementById('postText').value||'').trim();
+  if(!text){alert('Пікіріңізді жазыңыз'); return;}
+  const posts=JSON.parse(localStorage.getItem('posts')||'[]');
+  posts.unshift({author,text,time:new Date().toISOString()});
+  localStorage.setItem('posts',JSON.stringify(posts));
+  document.getElementById('postText').value=''; document.getElementById('author').value='';
+  renderPosts();
+  localStorage.setItem('forumParticipation', posts.length); updateBadges();
+}
+function renderPosts(){
+  const container=document.getElementById('posts'); container.innerHTML='';
+  const posts=JSON.parse(localStorage.getItem('posts')||'[]');
+  if(posts.length===0){ container.innerHTML='<p class="muted">Форумда жазба жоқ. Алғашқы болып пікір қалдырыңыз!</p>'; return;}
+  posts.forEach(p=>{ const el=document.createElement('div'); el.className='post'; const time=new Date(p.time).toLocaleString(); el.innerHTML=`<div class="meta"><strong>${escapeHtml(p.author)}</strong> • <span class="muted">${time}</span></div><div style="margin-top:6px">${escapeHtml(p.text)}</div>`; container.appendChild(el);});
+}
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+// ---------- Бағалау ----------
+function updateBadges(){
+  const q=localStorage.getItem('quizScore'); const g=localStorage.getItem('gameScore');
+  document.getElementById('scoreBadge').textContent = q?`${q}%`:'—';
+  document.getElementById('gameBadge').textContent = g?`${g}%`:'—';
+}
+function showSummary(){
+  const q=parseInt(localStorage.getItem('quizScore')||0,10);
+  const g=parseInt(localStorage.getItem('gameScore')||0,10);
+  const forumCnt=parseInt(localStorage.getItem('forumParticipation')||0,10);
+  const quizPart=q*0.4; const gamePart=g*0.2; const forumPart=Math.min(forumCnt,3)/3*20;
+  const finalPercent=Math.round(quizPart+gamePart+forumPart);
+  alert(`Жалпы бағалау (шамамен): ${finalPercent}%\n\n(Викторина: ${q}% • Ойын: ${g}% • Форум қатысуы: ${forumCnt} рет)`);
+}
+
+// ---------- Инициализация ----------
+renderPosts();
+updateBadges();
+</script>
+</body>
+</html>
